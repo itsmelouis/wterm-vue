@@ -30,11 +30,15 @@ const emit = defineEmits<{
 const rootEl = useTemplateRef<HTMLDivElement>("rootEl");
 const wterm = shallowRef<WTerm | null>(null);
 
-const rootClass = computed(() => {
-  const classes: string[] = [];
-  if (props.theme) classes.push(`theme-${props.theme}`);
-  return classes.join(" ") || undefined;
-});
+watch(
+  () => props.theme,
+  (cur, prev) => {
+    const el = rootEl.value;
+    if (!el) return;
+    if (prev) el.classList.remove(`theme-${prev}`);
+    if (cur) el.classList.add(`theme-${cur}`);
+  },
+);
 
 const rootStyle = computed<CSSProperties | undefined>(() => {
   if (props.autoResize) return undefined;
@@ -43,6 +47,7 @@ const rootStyle = computed<CSSProperties | undefined>(() => {
 
 onMounted(async () => {
   if (!rootEl.value) return;
+  if (props.theme) rootEl.value.classList.add(`theme-${props.theme}`);
   const wt = new WTerm(rootEl.value, {
     cols: props.cols,
     rows: props.rows,
@@ -111,7 +116,6 @@ defineExpose<TerminalInstance>({
     aria-label="Terminal"
     aria-multiline="true"
     aria-roledescription="terminal"
-    :class="rootClass"
     :style="rootStyle"
   />
 </template>
