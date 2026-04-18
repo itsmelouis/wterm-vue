@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "description": "Vue 3 addon for wterm — a terminal emulator for the web",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "homepage": "https://github.com/itsmelouis/wterm-vue",
   "repository": {
     "type": "git",

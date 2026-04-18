@@ -20,4 +20,4 @@ pnpm playground:build    # production build of the playground
 
 ## License
 
-Apache-2.0
+MIT
