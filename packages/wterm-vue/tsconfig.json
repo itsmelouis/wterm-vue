@@ -2,20 +2,20 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "target": "ES2022",
+    "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "paths": {
+      "@itsmelouis/wterm-vue": ["src/index.ts"]
+    },
+    "resolveJsonModule": true,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "declaration": true,
     "declarationMap": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
     "isolatedModules": true,
-    "baseUrl": ".",
-    "paths": {
-      "@itsmelouis/wterm-vue": ["src/index.ts"]
-    }
+    "skipLibCheck": true
   },
   "include": ["src/**/*.ts", "src/**/*.vue"],
   "exclude": ["dist", "node_modules", "playground"]

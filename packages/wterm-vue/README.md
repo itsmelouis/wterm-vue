@@ -16,14 +16,15 @@ pnpm add @itsmelouis/wterm-vue @wterm/dom
 
 ```vue
 <script setup lang="ts">
-import { Terminal, useTerminal, type WTerm } from "@itsmelouis/wterm-vue";
-import "@itsmelouis/wterm-vue/css";
+import type { WTerm } from '@itsmelouis/wterm-vue'
+import { Terminal, useTerminal } from '@itsmelouis/wterm-vue'
+import '@itsmelouis/wterm-vue/css'
 
-const { terminalRef, write, focus } = useTerminal();
+const { terminalRef, write, focus } = useTerminal()
 
 function onReady(wt: WTerm) {
-  write("hello from vue\r\n");
-  focus();
+  write('hello from vue\r\n')
+  focus()
 }
 </script>
 
@@ -36,16 +37,16 @@ By default the terminal echoes typed input. To forward to a remote PTY instead:
 
 ```vue
 <script setup lang="ts">
-import { Terminal, useTerminal } from "@itsmelouis/wterm-vue";
-import "@itsmelouis/wterm-vue/css";
+import { Terminal, useTerminal } from '@itsmelouis/wterm-vue'
+import '@itsmelouis/wterm-vue/css'
 
-const { terminalRef, write } = useTerminal();
-const socket = new WebSocket("ws://localhost:8080/pty");
-socket.binaryType = "arraybuffer";
-socket.onmessage = (e) => write(typeof e.data === "string" ? e.data : new Uint8Array(e.data));
+const { terminalRef, write } = useTerminal()
+const socket = new WebSocket('ws://localhost:8080/pty')
+socket.binaryType = 'arraybuffer'
+socket.onmessage = e => write(typeof e.data === 'string' ? e.data : new Uint8Array(e.data))
 
 function onData(data: string) {
-  socket.send(data);
+  socket.send(data)
 }
 </script>
 
@@ -82,10 +83,10 @@ The component exposes these via `ref`:
 
 ```ts
 interface TerminalInstance {
-  write(data: string | Uint8Array): void;
-  resize(cols: number, rows: number): void;
-  focus(): void;
-  readonly instance: WTerm | null;
+  write: (data: string | Uint8Array) => void
+  resize: (cols: number, rows: number) => void
+  focus: () => void
+  readonly instance: WTerm | null
 }
 ```
 
@@ -94,7 +95,7 @@ interface TerminalInstance {
 Sugar to avoid manually typing the ref and proxying methods:
 
 ```ts
-const { terminalRef, write, resize, focus } = useTerminal();
+const { terminalRef, write, resize, focus } = useTerminal()
 ```
 
 Pass `terminalRef` to `<Terminal ref="terminalRef">` in the template.
@@ -104,7 +105,7 @@ Pass `terminalRef` to `<Terminal ref="terminalRef">` in the template.
 Import the stylesheet once:
 
 ```ts
-import "@itsmelouis/wterm-vue/css";
+import '@itsmelouis/wterm-vue/css'
 ```
 
 Built-in themes: `solarized-dark`, `monokai`, `light`. Switch via the `theme` prop. All colors use CSS custom properties (`--term-fg`, `--term-bg`, `--term-color-0` through `--term-color-15`), so custom themes are plain CSS.

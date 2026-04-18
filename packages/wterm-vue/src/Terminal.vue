@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
+import type { TerminalInstance, TerminalProps } from './types'
+import { WTerm } from '@wterm/dom'
 import {
   computed,
+
   onBeforeUnmount,
   onMounted,
   shallowRef,
   useTemplateRef,
   watch,
-  type CSSProperties,
-} from "vue";
-import { WTerm } from "@wterm/dom";
-import type { TerminalProps, TerminalInstance } from "./types";
+} from 'vue'
 
 const props = withDefaults(defineProps<TerminalProps>(), {
   cols: 80,
@@ -17,37 +18,43 @@ const props = withDefaults(defineProps<TerminalProps>(), {
   autoResize: false,
   cursorBlink: false,
   echo: true,
-});
+})
 
 const emit = defineEmits<{
-  data: [data: string];
-  title: [title: string];
-  resize: [cols: number, rows: number];
-  ready: [wt: WTerm];
-  error: [err: unknown];
-}>();
+  data: [data: string]
+  title: [title: string]
+  resize: [cols: number, rows: number]
+  ready: [wt: WTerm]
+  error: [err: unknown]
+}>()
 
-const rootEl = useTemplateRef<HTMLDivElement>("rootEl");
-const wterm = shallowRef<WTerm | null>(null);
+const rootEl = useTemplateRef<HTMLDivElement>('rootEl')
+const wterm = shallowRef<WTerm | null>(null)
 
 watch(
   () => props.theme,
   (cur, prev) => {
-    const el = rootEl.value;
-    if (!el) return;
-    if (prev) el.classList.remove(`theme-${prev}`);
-    if (cur) el.classList.add(`theme-${cur}`);
+    const el = rootEl.value
+    if (!el)
+      return
+    if (prev)
+      el.classList.remove(`theme-${prev}`)
+    if (cur)
+      el.classList.add(`theme-${cur}`)
   },
-);
+)
 
 const rootStyle = computed<CSSProperties | undefined>(() => {
-  if (props.autoResize) return undefined;
-  return { height: `${props.rows * 17 + 24}px` };
-});
+  if (props.autoResize)
+    return undefined
+  return { height: `${props.rows * 17 + 24}px` }
+})
 
 onMounted(async () => {
-  if (!rootEl.value) return;
-  if (props.theme) rootEl.value.classList.add(`theme-${props.theme}`);
+  if (!rootEl.value)
+    return
+  if (props.theme)
+    rootEl.value.classList.add(`theme-${props.theme}`)
   const wt = new WTerm(rootEl.value, {
     cols: props.cols,
     rows: props.rows,
@@ -55,58 +62,63 @@ onMounted(async () => {
     autoResize: props.autoResize,
     cursorBlink: props.cursorBlink,
     onData: (data: string) => {
-      emit("data", data);
-      if (props.echo) wterm.value?.write(data);
+      emit('data', data)
+      if (props.echo)
+        wterm.value?.write(data)
     },
-    onTitle: (title: string) => emit("title", title),
-    onResize: (c: number, r: number) => emit("resize", c, r),
-  });
-  wterm.value = wt;
+    onTitle: (title: string) => emit('title', title),
+    onResize: (c: number, r: number) => emit('resize', c, r),
+  })
+  wterm.value = wt
   try {
-    await wt.init();
-    emit("ready", wt);
-  } catch (err) {
-    emit("error", err);
+    await wt.init()
+    emit('ready', wt)
   }
-});
+  catch (err) {
+    emit('error', err)
+  }
+})
 
 onBeforeUnmount(() => {
-  wterm.value?.destroy();
-  wterm.value = null;
-});
+  wterm.value?.destroy()
+  wterm.value = null
+})
 
 watch(
   () => [props.cols, props.rows] as const,
   ([cols, rows]) => {
-    const wt = wterm.value;
-    if (!wt?.bridge || props.autoResize) return;
-    if (wt.cols !== cols || wt.rows !== rows) wt.resize(cols, rows);
+    const wt = wterm.value
+    if (!wt?.bridge || props.autoResize)
+      return
+    if (wt.cols !== cols || wt.rows !== rows)
+      wt.resize(cols, rows)
   },
-);
+)
 
 watch(
   () => props.cursorBlink,
   (blink) => {
-    const wt = wterm.value;
-    if (!wt?.bridge) return;
-    wt.element.classList.toggle("cursor-blink", !!blink);
+    const wt = wterm.value
+    if (!wt?.bridge)
+      return
+    wt.element.classList.toggle('cursor-blink', !!blink)
   },
-);
+)
 
 defineExpose<TerminalInstance>({
   write(data) {
-    wterm.value?.write(data);
+    wterm.value?.write(data)
   },
   resize(c, r) {
-    wterm.value?.resize(c, r);
+    wterm.value?.resize(c, r)
   },
   focus() {
-    wterm.value?.focus();
+    wterm.value?.focus()
   },
   get instance() {
-    return wterm.value;
+    return wterm.value
   },
-});
+})
 </script>
 
 <template>
