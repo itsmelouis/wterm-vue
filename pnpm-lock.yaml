@@ -6,7 +6,9 @@ settings:
 
 importers:
 
-  .:
+  .: {}
+
+  packages/wterm-vue:
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.6
@@ -37,7 +39,7 @@ importers:
     dependencies:
       '@itsmelouis/wterm-vue':
         specifier: workspace:*
-        version: link:..
+        version: link:../packages/wterm-vue
       '@wterm/dom':
         specifier: ^0.1.8
         version: 0.1.8

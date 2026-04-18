@@ -1,0 +1,61 @@
+{
+  "name": "@itsmelouis/wterm-vue",
+  "version": "0.1.0",
+  "description": "Vue 3 addon for wterm — a terminal emulator for the web",
+  "type": "module",
+  "main": "./dist/wterm-vue.js",
+  "module": "./dist/wterm-vue.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/wterm-vue.js",
+      "default": "./dist/wterm-vue.js"
+    },
+    "./css": {
+      "style": "./src/terminal.css",
+      "import": "./src/terminal.css",
+      "default": "./src/terminal.css"
+    }
+  },
+  "files": [
+    "dist",
+    "src/terminal.css"
+  ],
+  "scripts": {
+    "build": "rimraf dist && vite build && vue-tsc -p tsconfig.build.json",
+    "type-check": "vue-tsc --noEmit",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "@wterm/dom": "^0.1.7",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/tsconfig": "^0.8.1",
+    "@wterm/dom": "^0.1.8",
+    "rimraf": "^6.0.1",
+    "typescript": "~5.9.2",
+    "vite": "^8.0.8",
+    "vue": "^3.5.32",
+    "vue-tsc": "^3.2.6"
+  },
+  "keywords": [
+    "terminal",
+    "emulator",
+    "wasm",
+    "zig",
+    "vue",
+    "vue3",
+    "wterm",
+    "xterm"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/itsmelouis/wterm-vue",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsmelouis/wterm-vue",
+    "directory": "packages/wterm-vue"
+  }
+}
