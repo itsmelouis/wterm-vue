@@ -44,6 +44,9 @@
     "type-check": "vue-tsc --noEmit",
     "prepublishOnly": "pnpm build"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "@wterm/dom": "^0.1.7",
     "vue": "^3.4.0"
