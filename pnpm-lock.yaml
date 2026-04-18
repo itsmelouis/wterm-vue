@@ -20,9 +20,12 @@ importers:
 
   packages/wterm-vue:
     devDependencies:
+      '@types/node':
+        specifier: ^24.12.2
+        version: 24.12.2
       '@vitejs/plugin-vue':
         specifier: ^6.0.6
-        version: 6.0.6(vite@8.0.8(jiti@2.6.1)(yaml@2.8.3))(vue@3.5.32(typescript@5.9.3))
+        version: 6.0.6(vite@8.0.8(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.3))(vue@3.5.32(typescript@5.9.3))
       '@vue/tsconfig':
         specifier: ^0.8.1
         version: 0.8.1(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
@@ -37,7 +40,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: ^8.0.8
-        version: 8.0.8(jiti@2.6.1)(yaml@2.8.3)
+        version: 8.0.8(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.3)
       vue:
         specifier: ^3.5.32
         version: 3.5.32(typescript@5.9.3)
@@ -59,7 +62,7 @@ importers:
     devDependencies:
       '@vitejs/plugin-vue':
         specifier: ^6.0.6
-        version: 6.0.6(vite@8.0.8(jiti@2.6.1)(yaml@2.8.3))(vue@3.5.32(typescript@5.9.3))
+        version: 6.0.6(vite@8.0.8(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.3))(vue@3.5.32(typescript@5.9.3))
       '@vue/tsconfig':
         specifier: ^0.8.1
         version: 0.8.1(typescript@5.9.3)(vue@3.5.32(typescript@5.9.3))
@@ -68,7 +71,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: ^8.0.8
-        version: 8.0.8(jiti@2.6.1)(yaml@2.8.3)
+        version: 8.0.8(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.3)
       vue-tsc:
         specifier: ^3.2.6
         version: 3.2.6(typescript@5.9.3)
@@ -424,6 +427,9 @@ packages:
 
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
+
+  '@types/node@24.12.2':
+    resolution: {integrity: sha512-A1sre26ke7HDIuY/M23nd9gfB+nrmhtYyMINbjI1zHJxYteKR6qSMX56FsmjMcDb3SMcjJg5BiRRgOCC/yBD0g==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -1577,6 +1583,9 @@ packages:
   ufo@1.6.3:
     resolution: {integrity: sha512-yDJTmhydvl5lJzBmy/hyOAA0d+aqCBuwl818haVdYCRrWV84o7YyeVm4QlVHStqNrrJSTb6jKuFAVqAFsr+K3Q==}
 
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+
   unist-util-is@6.0.1:
     resolution: {integrity: sha512-LsiILbtBETkDz8I9p1dQ0uyRUWuaQzd/cuEeS1hoRSyW5E5XGmTzlwY1OrNzzakGowI9Dr/I8HVaw4hTtnxy8g==}
 
@@ -2007,6 +2016,10 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
+  '@types/node@24.12.2':
+    dependencies:
+      undici-types: 7.16.0
+
   '@types/unist@3.0.3': {}
 
   '@typescript-eslint/eslint-plugin@8.58.2(@typescript-eslint/parser@8.58.2(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3))(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3)':
@@ -2114,10 +2127,10 @@ snapshots:
       '@typescript-eslint/types': 8.58.2
       eslint-visitor-keys: 5.0.1
 
-  '@vitejs/plugin-vue@6.0.6(vite@8.0.8(jiti@2.6.1)(yaml@2.8.3))(vue@3.5.32(typescript@5.9.3))':
+  '@vitejs/plugin-vue@6.0.6(vite@8.0.8(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.3))(vue@3.5.32(typescript@5.9.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.0-rc.13
-      vite: 8.0.8(jiti@2.6.1)(yaml@2.8.3)
+      vite: 8.0.8(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.3)
       vue: 3.5.32(typescript@5.9.3)
 
   '@vitest/eslint-plugin@1.6.16(@typescript-eslint/eslint-plugin@8.58.2(@typescript-eslint/parser@8.58.2(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3))(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3))(eslint@10.2.1(jiti@2.6.1))(typescript@5.9.3)':
@@ -3382,6 +3395,8 @@ snapshots:
 
   ufo@1.6.3: {}
 
+  undici-types@7.16.0: {}
+
   unist-util-is@6.0.1:
     dependencies:
       '@types/unist': 3.0.3
@@ -3418,7 +3433,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vite@8.0.8(jiti@2.6.1)(yaml@2.8.3):
+  vite@8.0.8(@types/node@24.12.2)(jiti@2.6.1)(yaml@2.8.3):
     dependencies:
       lightningcss: 1.32.0
       picomatch: 4.0.4
@@ -3426,6 +3441,7 @@ snapshots:
       rolldown: 1.0.0-rc.15
       tinyglobby: 0.2.16
     optionalDependencies:
+      '@types/node': 24.12.2
       fsevents: 2.3.3
       jiti: 2.6.1
       yaml: 2.8.3
