@@ -10,10 +10,14 @@
     "type-check": "pnpm -r --parallel --if-present type-check",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "playground:build": "pnpm --filter playground build"
+    "playground:build": "pnpm --filter playground build",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm build && changeset publish"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^8.2.0",
+    "@changesets/cli": "^2.31.0",
     "eslint": "^10.2.1",
     "jiti": "^2.6.1"
   }
