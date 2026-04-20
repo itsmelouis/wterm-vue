@@ -27,9 +27,8 @@ pnpm add @itsmelouis/wterm-vue @wterm/dom
 
 ```ts
 import type { TerminalInstance, TerminalProps } from '@itsmelouis/wterm-vue'
-import { Terminal, useTerminal } from '@itsmelouis/wterm-vue'
-// Also re-exported from @wterm/dom (no second import needed):
-import { WebSocketTransport, WTerm } from '@itsmelouis/wterm-vue'
+// `WTerm` and `WebSocketTransport` are re-exported from `@wterm/dom`, no second import needed:
+import { Terminal, useTerminal, WebSocketTransport, WTerm } from '@itsmelouis/wterm-vue'
 import '@itsmelouis/wterm-vue/css' // once, at app entry or in a layout
 ```
 
