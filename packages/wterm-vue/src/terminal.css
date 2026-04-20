@@ -1,1 +1,47 @@
 @import "@wterm/dom/css";
+
+/* Vitesse Dark — https://github.com/antfu/vscode-theme-vitesse */
+.wterm.theme-vitesse-dark {
+  --term-fg: #dbd7ca;
+  --term-bg: #121212;
+  --term-cursor: #4d9375;
+  --term-color-0: #393a34;
+  --term-color-1: #cb7676;
+  --term-color-2: #4d9375;
+  --term-color-3: #e6cc77;
+  --term-color-4: #6394bf;
+  --term-color-5: #d9739f;
+  --term-color-6: #5eaab5;
+  --term-color-7: #dbd7ca;
+  --term-color-8: #777777;
+  --term-color-9: #cb7676;
+  --term-color-10: #4d9375;
+  --term-color-11: #e6cc77;
+  --term-color-12: #6394bf;
+  --term-color-13: #d9739f;
+  --term-color-14: #5eaab5;
+  --term-color-15: #ffffff;
+}
+
+/* Vitesse Light — https://github.com/antfu/vscode-theme-vitesse */
+.wterm.theme-vitesse-light {
+  --term-fg: #393a34;
+  --term-bg: #ffffff;
+  --term-cursor: #1e754f;
+  --term-color-0: #121212;
+  --term-color-1: #ab5959;
+  --term-color-2: #1e754f;
+  --term-color-3: #bda437;
+  --term-color-4: #296aa3;
+  --term-color-5: #a13865;
+  --term-color-6: #2993a3;
+  --term-color-7: #dbd7ca;
+  --term-color-8: #aaaaaa;
+  --term-color-9: #ab5959;
+  --term-color-10: #1e754f;
+  --term-color-11: #bda437;
+  --term-color-12: #296aa3;
+  --term-color-13: #a13865;
+  --term-color-14: #2993a3;
+  --term-color-15: #dddddd;
+}

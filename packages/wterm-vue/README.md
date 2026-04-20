@@ -108,7 +108,7 @@ Import the stylesheet once:
 import '@itsmelouis/wterm-vue/css'
 ```
 
-Built-in themes: `solarized-dark`, `monokai`, `light`. Switch via the `theme` prop. All colors use CSS custom properties (`--term-fg`, `--term-bg`, `--term-color-0` through `--term-color-15`), so custom themes are plain CSS.
+Built-in themes: `solarized-dark`, `monokai`, `light`, `vitesse-dark`, `vitesse-light`. Switch via the `theme` prop. All colors use CSS custom properties (`--term-fg`, `--term-bg`, `--term-color-0` through `--term-color-15`), so custom themes are plain CSS.
 
 ## Claude Code skill
 

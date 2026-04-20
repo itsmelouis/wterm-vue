@@ -34,7 +34,7 @@ const COMMANDS: Record<string, (args: string[]) => string> = {
       '  \x1B[33mecho\x1B[0m       Echo arguments back',
       '  \x1B[33mdate\x1B[0m       Print current date/time',
       '  \x1B[33mwhoami\x1B[0m     Who are you?',
-      '  \x1B[33mtheme\x1B[0m      Show or set theme (default, solarized-dark, monokai, light)',
+      '  \x1B[33mtheme\x1B[0m      Show or set theme (default, solarized-dark, monokai, light, vitesse-dark, vitesse-light)',
       '',
     ].join('\r\n'),
 
@@ -58,7 +58,7 @@ const COMMANDS: Record<string, (args: string[]) => string> = {
   whoami: () => '\r\n  \x1B[1;35mguest\x1B[0m@wterm-vue',
 
   theme: (args) => {
-    const valid = ['default', 'solarized-dark', 'monokai', 'light']
+    const valid = ['default', 'solarized-dark', 'monokai', 'light', 'vitesse-dark', 'vitesse-light']
     if (!args.length) {
       return `\r\n  current: \x1B[1m${theme.value || 'default'}\x1B[0m`
     }
@@ -166,6 +166,12 @@ function onResize(c: number) {
       </option>
       <option value="light">
         light
+      </option>
+      <option value="vitesse-dark">
+        vitesse-dark
+      </option>
+      <option value="vitesse-light">
+        vitesse-light
       </option>
     </select>
   </div>

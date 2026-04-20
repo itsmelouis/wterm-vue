@@ -26,10 +26,10 @@ pnpm add @itsmelouis/wterm-vue @wterm/dom
 ## Import surface
 
 ```ts
-import { Terminal, useTerminal } from '@itsmelouis/wterm-vue'
 import type { TerminalInstance, TerminalProps } from '@itsmelouis/wterm-vue'
+import { Terminal, useTerminal } from '@itsmelouis/wterm-vue'
 // Also re-exported from @wterm/dom (no second import needed):
-import { WTerm, WebSocketTransport } from '@itsmelouis/wterm-vue'
+import { WebSocketTransport, WTerm } from '@itsmelouis/wterm-vue'
 import '@itsmelouis/wterm-vue/css' // once, at app entry or in a layout
 ```
 
@@ -91,7 +91,7 @@ function onData(data: string) {
 | `cols` | `number` | `80` | Live-reactive, triggers `wt.resize()`. |
 | `rows` | `number` | `24` | Same. |
 | `wasmUrl` | `string` | — | Only needed if you serve the WASM binary separately (rare). |
-| `theme` | `string` | — | `"solarized-dark" \| "monokai" \| "light"` or a custom `theme-<name>` CSS class. |
+| `theme` | `string` | — | `"solarized-dark" \| "monokai" \| "light" \| "vitesse-dark" \| "vitesse-light"` or a custom `theme-<name>` CSS class. |
 | `autoResize` | `boolean` | `false` | Fit to container. When `true`, `cols/rows` props are ignored after mount. |
 | `cursorBlink` | `boolean` | `false` | Live-reactive. |
 | `echo` | `boolean` | `true` | See remote-PTY pattern above. |
@@ -124,7 +124,7 @@ interface TerminalInstance {
 1. **Always use `shallowRef` for `WTerm` or `TerminalInstance` refs.** `WTerm` has private class fields. Vue's deep `UnwrapRef<T>` mapped type strips the nominal identity, producing TS2322 at build. The lib already uses `shallowRef` internally; mirror that in user code:
    ```ts
    const term = shallowRef<WTerm | null>(null) // ✅
-   const term = ref<WTerm | null>(null)        // ❌ TS2322
+   const term = ref<WTerm | null>(null) // ❌ TS2322
    ```
 
 2. **Echo semantics differ from `@wterm/react`.** React's version disables echo whenever an `onData` handler is set. This lib keeps echo **on** by default even if you listen to `@data`. Explicitly set `:echo="false"` for the PTY case.
@@ -191,10 +191,10 @@ defineProps<{
 }>()
 
 defineEmits<{
-  data:   [data: string]
-  title:  [title: string]
+  data: [data: string]
+  title: [title: string]
   resize: [cols: number, rows: number]
-  ready:  [wt: WTerm]
-  error:  [err: unknown]
+  ready: [wt: WTerm]
+  error: [err: unknown]
 }>()
 ```
