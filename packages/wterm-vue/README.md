@@ -110,6 +110,18 @@ import '@itsmelouis/wterm-vue/css'
 
 Built-in themes: `solarized-dark`, `monokai`, `light`. Switch via the `theme` prop. All colors use CSS custom properties (`--term-fg`, `--term-bg`, `--term-color-0` through `--term-color-15`), so custom themes are plain CSS.
 
+## Claude Code skill
+
+A [Claude Code skill](https://docs.claude.com/en/docs/claude-code/skills) lives at [`/skills/wterm-vue`](https://github.com/itsmelouis/wterm-vue/tree/main/skills/wterm-vue) in this repo. It teaches an LLM the component API, the echo-vs-remote-PTY wiring, themes, and the non-obvious gotchas (e.g. `shallowRef` requirement, SSR, cleanup).
+
+Install it via the [skills](https://skills.sh) CLI:
+
+```bash
+npx skills add itsmelouis/wterm-vue@wterm-vue
+```
+
+Or copy `skills/wterm-vue/SKILL.md` into your project's `.claude/skills/wterm-vue/`.
+
 ## Development
 
 ```bash
