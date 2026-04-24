@@ -7,6 +7,13 @@ export interface TerminalProps {
   theme?: string
   autoResize?: boolean
   cursorBlink?: boolean
+  /**
+   * Enable debug mode. Exposes a `DebugAdapter` on the underlying `WTerm`
+   * instance (accessible via the exposed `instance` ref) for inspecting
+   * escape sequences, cell data, render performance, and unhandled CSI
+   * sequences. Init-only — changing after mount has no effect.
+   */
+  debug?: boolean
   echo?: boolean
 }
 
