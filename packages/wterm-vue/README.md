@@ -33,27 +33,26 @@ function onReady(wt: WTerm) {
 </template>
 ```
 
-By default the terminal echoes typed input. To forward to a remote PTY instead:
+By default the terminal echoes typed input. To forward to a remote PTY instead, use the built-in `useWebSocketTransport()` composable:
 
 ```vue
 <script setup lang="ts">
-import { Terminal, useTerminal } from '@itsmelouis/wterm-vue'
+import { Terminal, useTerminal, useWebSocketTransport } from '@itsmelouis/wterm-vue'
 import '@itsmelouis/wterm-vue/css'
 
-const { terminalRef, write } = useTerminal()
-const socket = new WebSocket('ws://localhost:8080/pty')
-socket.binaryType = 'arraybuffer'
-socket.onmessage = e => write(typeof e.data === 'string' ? e.data : new Uint8Array(e.data))
-
-function onData(data: string) {
-  socket.send(data)
-}
+const { terminalRef } = useTerminal()
+const { send, connected } = useWebSocketTransport('ws://localhost:8080/pty', {
+  terminal: terminalRef,
+})
 </script>
 
 <template>
-  <Terminal ref="terminalRef" :echo="false" @data="onData" />
+  <span>{{ connected ? 'online' : 'offline' }}</span>
+  <Terminal ref="terminalRef" :echo="false" @data="send" />
 </template>
 ```
+
+`useWebSocketTransport` wraps `@wterm/dom`'s `WebSocketTransport` with automatic reconnection, send buffering, and a reactive `connected` ref. Full API in the **Composables** section below.
 
 ## `<Terminal>` props
 
@@ -91,7 +90,9 @@ interface TerminalInstance {
 }
 ```
 
-## `useTerminal()` composable
+## Composables
+
+### `useTerminal()`
 
 Sugar to avoid manually typing the ref and proxying methods:
 
@@ -100,6 +101,30 @@ const { terminalRef, write, resize, focus } = useTerminal()
 ```
 
 Pass `terminalRef` to `<Terminal ref="terminalRef">` in the template.
+
+### `useWebSocketTransport()`
+
+Idiomatic wrapper around `WebSocketTransport` from `@wterm/dom`. Manages the socket lifecycle, exposes a reactive `connected` flag, and can auto-wire incoming data to a terminal ref.
+
+```ts
+const { send, connected, open, close, transport } = useWebSocketTransport(
+  'ws://localhost:8080/pty',
+  {
+    terminal: terminalRef, // auto-write server data into the terminal
+    reconnect: true, // auto-reconnect on disconnect (default true)
+    maxReconnectDelay: 30000, // cap for the backoff, ms
+    onData: (data) => {}, // called in addition to the auto terminal.write
+    onOpen: () => {},
+    onClose: () => {},
+    onError: (event) => {},
+    immediate: true, // open on mount when url is set (default true)
+  },
+)
+```
+
+The first argument is a `MaybeRefOrGetter<string | undefined>` — you can pass a ref and the transport will reconnect when its value changes. The connection is closed automatically on component unmount.
+
+You still forward user input from the terminal via `@data="send"` — this keeps the Vue event flow intact and lets you intercept input if needed.
 
 ## Themes
 

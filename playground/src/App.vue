@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import type { WTerm } from '@itsmelouis/wterm-vue'
-import { Terminal, useTerminal } from '@itsmelouis/wterm-vue'
+import { Terminal, useTerminal, useWebSocketTransport } from '@itsmelouis/wterm-vue'
 import { ref } from 'vue'
 
 const { terminalRef, write, focus } = useTerminal()
 
 const theme = ref('')
 const title = ref('wterm-vue')
+const mode = ref<'local' | 'pty'>('local')
+
+const { terminalRef: ptyTerminalRef } = useTerminal()
+const ptyUrl = ref<string | undefined>(undefined)
+const { send: ptySend, connected: ptyConnected } = useWebSocketTransport(ptyUrl, {
+  terminal: ptyTerminalRef,
+})
+
+function connectPty() {
+  ptyUrl.value = `ws://${location.host}/pty`
+}
 
 let line = ''
 let _cols = 80
@@ -174,9 +185,14 @@ function onResize(c: number) {
         vitesse-light
       </option>
     </select>
+
+    <div class="mode-toggle">
+      <label><input v-model="mode" type="radio" value="local"> local shell</label>
+      <label><input v-model="mode" type="radio" value="pty"> remote PTY</label>
+    </div>
   </div>
 
-  <div class="terminal-wrap">
+  <div v-show="mode === 'local'" class="terminal-wrap">
     <Terminal
       ref="terminalRef"
       :cols="80"
@@ -188,6 +204,27 @@ function onResize(c: number) {
       @data="onData"
       @title="onTitle"
       @resize="onResize"
+    />
+  </div>
+
+  <div v-show="mode === 'pty'" class="terminal-wrap">
+    <div class="pty-bar">
+      <span class="status" :class="{ on: ptyConnected }">
+        {{ ptyConnected ? '🟢 connected' : '🔴 offline' }}
+      </span>
+      <button v-if="!ptyUrl" type="button" @click="connectPty">
+        connect to /pty
+      </button>
+      <span v-else class="url">{{ ptyUrl }}</span>
+    </div>
+    <Terminal
+      ref="ptyTerminalRef"
+      :cols="80"
+      :rows="24"
+      :echo="false"
+      :theme="theme || undefined"
+      :cursor-blink="true"
+      @data="ptySend"
     />
   </div>
 </template>
