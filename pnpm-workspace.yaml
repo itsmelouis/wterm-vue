@@ -5,3 +5,6 @@ trustPolicy: no-downgrade
 packages:
   - packages/*
   - playground
+
+onlyBuiltDependencies:
+  - node-pty
