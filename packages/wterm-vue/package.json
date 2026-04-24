@@ -1,7 +1,7 @@
 {
   "name": "@itsmelouis/wterm-vue",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Vue 3 addon for wterm — a terminal emulator for the web",
   "license": "MIT",
   "homepage": "https://github.com/itsmelouis/wterm-vue",
