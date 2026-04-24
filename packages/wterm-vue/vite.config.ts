@@ -9,14 +9,23 @@ export default defineConfig({
   plugins: [vue()],
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
-      name: 'WTermVue',
+      entry: {
+        'wterm-vue': resolve(__dirname, 'src/index.ts'),
+        'nuxt': resolve(__dirname, 'src/nuxt.ts'),
+      },
       formats: ['es'],
-      fileName: () => 'wterm-vue.js',
+      fileName: (_format, entryName) => `${entryName}.js`,
     },
     sourcemap: true,
     rollupOptions: {
-      external: ['vue', '@wterm/dom', '@wterm/core'],
+      external: [
+        'vue',
+        '@wterm/dom',
+        '@wterm/core',
+        '@nuxt/kit',
+        '@nuxt/schema',
+        /^node:/,
+      ],
       output: {
         globals: {
           'vue': 'Vue',

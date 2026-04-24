@@ -26,6 +26,11 @@
       "import": "./dist/wterm-vue.js",
       "default": "./dist/wterm-vue.js"
     },
+    "./nuxt": {
+      "types": "./dist/nuxt.d.ts",
+      "import": "./dist/nuxt.js",
+      "default": "./dist/nuxt.js"
+    },
     "./css": {
       "style": "./src/terminal.css",
       "import": "./src/terminal.css",
@@ -48,10 +53,18 @@
     "access": "public"
   },
   "peerDependencies": {
+    "@nuxt/kit": "^3.13.0 || ^4.0.0",
     "@wterm/dom": "^0.1.9",
     "vue": "^3.4.0"
   },
+  "peerDependenciesMeta": {
+    "@nuxt/kit": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@nuxt/kit": "^4.0.0",
+    "@nuxt/schema": "^4.0.0",
     "@types/node": "^24.12.2",
     "@vitejs/plugin-vue": "^6.0.6",
     "@vue/tsconfig": "^0.8.1",

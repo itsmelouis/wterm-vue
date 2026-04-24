@@ -126,6 +126,30 @@ The first argument is a `MaybeRefOrGetter<string | undefined>` — you can pass 
 
 You still forward user input from the terminal via `@data="send"` — this keeps the Vue event flow intact and lets you intercept input if needed.
 
+## Nuxt
+
+A Nuxt module ships as a subpath export — no separate package to install. Enable it in `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@itsmelouis/wterm-vue/nuxt'],
+})
+```
+
+It auto-registers the `<Terminal>` component, auto-imports `useTerminal()` and `useWebSocketTransport()`, and injects the CSS. All options surface under the `wterm` key:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@itsmelouis/wterm-vue/nuxt'],
+  wterm: {
+    components: true, // register <Terminal> globally (default true)
+    composables: true, // auto-import useTerminal / useWebSocketTransport (default true)
+    css: true, // inject the default stylesheet (default true)
+    prefix: '', // component name prefix, e.g. 'W' gives <WTerminal>
+  },
+})
+```
+
 ## Themes
 
 Import the stylesheet once:
@@ -153,8 +177,9 @@ Or copy `skills/wterm-vue/SKILL.md` into your project's `.claude/skills/wterm-vu
 ```bash
 corepack enable
 pnpm install
-pnpm dev        # starts the playground
-pnpm build      # builds the library
+pnpm dev        # starts the Vue playground (playground/vue)
+pnpm dev:nuxt   # starts the Nuxt playground (playground/nuxt)
+pnpm build      # builds the library (main + nuxt module entries)
 ```
 
 ## License

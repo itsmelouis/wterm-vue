@@ -8,11 +8,12 @@ A pnpm monorepo for [`@itsmelouis/wterm-vue`](./packages/wterm-vue) — a Vue 3 
 
 ## Layout
 
-- `packages/wterm-vue/` — the published library. All source, configs, and the consumer-facing README live here.
-- `playground/` — pnpm workspace member, **not** published. Consumes the lib via `workspace:*` symlink.
+- `packages/wterm-vue/` — the published library. All source, configs, and the consumer-facing README live here. The Nuxt module ships as a subpath export (`@itsmelouis/wterm-vue/nuxt`, built from `src/nuxt.ts`) — not a separate package.
+- `playground/vue/` — pnpm workspace member (`playground-vue`), Vite-based demo consuming the lib via `workspace:*` symlink. Hosts the remote-PTY Vite plugin for the `useWebSocketTransport` demo.
+- `playground/nuxt/` — pnpm workspace member (`playground-nuxt`), Nuxt 4 app that consumes the Nuxt module via `modules: ['@itsmelouis/wterm-vue/nuxt']`.
 - Root — meta only: `package.json` (private), `pnpm-workspace.yaml`, lockfile, this file, root README.
 
-When adding a new sibling package (e.g. a Nuxt module), create it under `packages/<name>/` — `pnpm-workspace.yaml` already globs `packages/*`.
+`pnpm-workspace.yaml` globs `packages/*` and `playground/*`, so a new sibling package goes under `packages/<name>/` and a new demo app under `playground/<name>/`.
 
 ## Commands
 
@@ -22,9 +23,11 @@ Run from the repo root unless noted.
 corepack enable          # once, to activate pinned pnpm version
 pnpm install             # installs every workspace
 pnpm build               # → pnpm --filter @itsmelouis/wterm-vue build
-pnpm dev                 # → pnpm --filter playground dev (runs on :5173)
+pnpm dev                 # → pnpm --filter playground-vue dev (runs on :5173)
+pnpm dev:nuxt            # → pnpm --filter playground-nuxt dev (runs on :3000)
 pnpm type-check          # → pnpm -r --parallel --if-present type-check
-pnpm playground:build    # production build of the demo app
+pnpm playground:vue:build    # production build of the Vite demo
+pnpm playground:nuxt:build   # production build of the Nuxt demo
 ```
 
 The library `build` script (in `packages/wterm-vue/package.json`) splits responsibilities: **Vite library mode** emits the JS bundle + sourcemap to `dist/wterm-vue.js`; **vue-tsc** emits `.d.ts` only (via `tsconfig.build.json` which sets `emitDeclarationOnly`). Both must succeed.
@@ -43,7 +46,11 @@ The library `build` script (in `packages/wterm-vue/package.json`) splits respons
 - **`echo` prop semantics** (default `true`): when true, the wrapper always writes typed input back via `wterm.value?.write(data)` so the terminal behaves standalone. Set to `false` when forwarding to a remote PTY — the wrapper then only emits `@data` and does not echo. This mirrors (but does not exactly match) `@wterm/react`'s "if `onData` is set, no echo" behavior.
 - **Peer externalisation.** `packages/wterm-vue/vite.config.ts` externalises `vue`, `@wterm/dom`, and `@wterm/core`. If you add a runtime dep that should be bundled, update `rollupOptions.external`.
 - **`packageManager` is pinned** to `pnpm@10.33.0` at the repo root via corepack. Don't swap for npm/yarn — the workspace relies on pnpm's `workspace:*` protocol.
-- The playground is **not** published; it's a pnpm workspace member purely to consume the lib locally via symlink.
+- The playgrounds are **not** published; they're pnpm workspace members (`playground-vue`, `playground-nuxt`) purely to consume the lib locally via symlink.
+- The Nuxt module (`src/nuxt.ts`) resolves the lib and `@wterm/dom/css` paths via `createRequire(import.meta.url)` so Nuxt/Vite sees real file paths. Don't reintroduce bare specifiers here — they get re-resolved against the consuming app's `node_modules` and break for pnpm users.
+- `<Terminal>` is registered as an "all" component (SSR + client), **not** `mode: 'client'`. The component defers every WASM/DOM interaction to `onMounted`, so SSR renders a bare `<div>`; switching to `mode: 'client'` wraps it in `<ClientOnly>` which breaks template refs.
+- `@nuxt/kit` is an **optional** peer dep of the lib (via `peerDependenciesMeta`). Consumers using the main entry (`import { Terminal } from '@itsmelouis/wterm-vue'`) don't pull Nuxt; only those using `/nuxt` do.
+- Vite builds two entries (`wterm-vue.js` + `nuxt.js`) via `build.lib.entry` as an object. `@nuxt/kit`, `@nuxt/schema`, and `/^node:/` must stay in `rollupOptions.external`.
 
 ## Reference: upstream
 

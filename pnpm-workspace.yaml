@@ -4,7 +4,11 @@ trustPolicy: no-downgrade
 
 packages:
   - packages/*
-  - playground
+  - playground/*
+
+overrides:
+  chokidar: 4.0.1
+  semver: 7.6.3
 
 onlyBuiltDependencies:
   - node-pty
