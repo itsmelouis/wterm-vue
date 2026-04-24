@@ -48,14 +48,14 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@wterm/dom": "^0.1.7",
+    "@wterm/dom": "^0.1.9",
     "vue": "^3.4.0"
   },
   "devDependencies": {
     "@types/node": "^24.12.2",
     "@vitejs/plugin-vue": "^6.0.6",
     "@vue/tsconfig": "^0.8.1",
-    "@wterm/dom": "^0.1.8",
+    "@wterm/dom": "^0.1.9",
     "rimraf": "^6.0.1",
     "typescript": "~5.9.2",
     "vite": "^8.0.8",

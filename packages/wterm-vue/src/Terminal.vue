@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<TerminalProps>(), {
   rows: 24,
   autoResize: false,
   cursorBlink: false,
+  debug: false,
   echo: true,
 })
 
@@ -61,6 +62,7 @@ onMounted(async () => {
     wasmUrl: props.wasmUrl,
     autoResize: props.autoResize,
     cursorBlink: props.cursorBlink,
+    debug: props.debug,
     onData: (data: string) => {
       emit('data', data)
       if (props.echo)

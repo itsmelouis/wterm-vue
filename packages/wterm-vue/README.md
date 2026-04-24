@@ -65,6 +65,7 @@ function onData(data: string) {
 | `theme` | `string` | — | Theme name (`"solarized-dark"`, `"monokai"`, `"light"`) |
 | `autoResize` | `boolean` | `false` | Auto-resize based on container dimensions |
 | `cursorBlink` | `boolean` | `false` | Enable cursor blinking animation |
+| `debug` | `boolean` | `false` | Enable debug mode. Exposes a `DebugAdapter` on the underlying `WTerm` (via the exposed `instance`) for inspecting escape sequences, cell data, render performance, and unhandled CSI sequences. Init-only — changing after mount has no effect. |
 | `echo` | `boolean` | `true` | When `true`, typed input is echoed back automatically. Set to `false` when forwarding input to a remote shell. |
 
 ## `<Terminal>` events
